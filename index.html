@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zainab, Will You Be Mine? 💝</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&display=swap');
+        
+        :root {
+            --primary: #ff6b9d;
+            --secondary: #ff8fab;
+            --dark: #d23669;
+            --light: #fff0f3;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--light);
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.5s;
+        }
+        
+        .scene {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+            z-index: 1;
+            opacity: 1;
+            transition: all 0.5s;
+        }
+        
+        .scene.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.9);
+        }
+        
+        .love-letter {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 600px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.5s;
+        }
+        
+        .love-letter::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, #ff6b9d, #ffb3c6);
+            z-index: -1;
+            border-radius: 30px;
+            opacity: 0.7;
+            filter: blur(20px);
+        }
+        
+        h1 {
+            font-family: 'Pacifico', cursive;
+            color: var(--dark);
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: var(--dark);
+            margin-top: 20px;
+        }
+        
+        .btn {
+            border: none;
+            padding: 15px 30px;
+            margin: 10px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn-yes {
+            background: linear-gradient(45deg, #4CAF50, #8BC34A);
+            color: white;
+            z-index: 10;
+        }
+        
+        .btn-no {
+            background: linear-gradient(45deg, #F44336, #E91E63);
+            color: white;
+            transition: all 0.5s ease-out;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .btn-container {
+            position: relative;
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        /* Special effects */
+        .floating-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .heart {
+            position: absolute;
+            opacity: 0;
+            animation: float-up 6s linear infinite;
+        }
+        
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Celebration */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+        }
+        
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255,255,255,0.9);
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.5s;
+        }
+        
+        .celebration.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .celebration h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .celebration p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+        
+        .emoji {
+            font-size: 3rem;
+            margin: 10px;
+            animation: pulse 1s infinite alternate;
+        }
+        
+        .whatsapp-btn {
+            background: linear-gradient(45deg, #25D366, #128C7E);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            margin-top: 20px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        
+        .whatsapp-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.2); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            p {
+                font-size: 1rem;
+            }
+            
+            .btn {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+            
+            .celebration h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Proposal Scenes -->
+    <div class="scene" id="proposal-scene-1">
+        <div class="love-letter">
+            <h1>My Dearest ZAINAB ( ZANU ) 💖</h1>
+            <p>From the moment our paths crossed, my world gained colors I never knew existed. Your laughter is my favorite melody, and your smile my most cherished view.</p>
+            <p>I want to spend every sunrise and sunset with you. Will you make me the happiest person alive?</p>
+            
+            <div class="btn-container">
+                <button class="btn btn-yes" id="yes-btn">YES! 💘</button>
+                <button class="btn btn-no" id="no-btn-1">No 😢</button>
+            </div>
+            
+            <p class="signature">Yours forever, S.M. Azfar</p>
+        </div>
+    </div>
+    
+    <div class="scene hidden" id="proposal-scene-2">
+        <div class="love-letter">
+            <h1>My Heart's Desire 💘</h1>
+            <p>ZANU, I understand if you need time, but please know that my love for you is endless.</p>
+            <p>You complete me in ways I can't explain. Would you give us a chance?</p>
+            
+            <div class="btn-container">
+                <button class="btn btn-yes" id="yes-btn-2">YES! ❤️</button>
+                <button class="btn btn-no" id="no-btn-2">Not yet...</button>
+            </div>
+            
+            <p class="signature">Still yours, S.M. Azfar</p>
+        </div>
+    </div>
+    
+    <div class="scene hidden" id="proposal-scene-3">
+        <div class="love-letter">
+            <h1>I Won't Give Up 💪🫂</h1>
+            <p>ZANU, every moment with you feels like a beautiful dream. I promise to cherish you, respect you, and love you unconditionally.</p>
+            <p>Will you let me prove my love to you every single day?</p>
+            
+            <div class="btn-container">
+                <button class="btn btn-yes" id="yes-btn-3">YES! 😍</button>
+                <button class="btn btn-no" id="no-btn-3">I'm scared...</button>
+            </div>
+            
+            <p class="signature">Hopelessly devoted, S.M. Azfar</p>
+        </div>
+    </div>
+    
+    <div class="scene hidden" id="proposal-scene-4">
+        <div class="love-letter">
+            <h1>My Final Plea 💌</h1>
+            <p>ZAINAB, I've loved you through every "no" and will keep loving you no matter what. But please, give me this one chance to make you happy.</p>
+            <p>Will you be mine, today and forever?</p>
+            
+            <div class="btn-container">
+                <button class="btn btn-yes" id="yes-btn-4">YES!  🤭</button>
+                <button class="btn btn-no" id="no-btn-4">Make me! 😝</button>
+            </div>
+            
+            <p class="signature">Your persistent admirer, S.M. Azfar</p>
+        </div>
+    </div>
+    
+    <!-- Celebration Scene -->
+    <div class="celebration" id="celebration">
+        <h1>YAY! SHE SAID YES! 🎉</h1>
+        <p>ZANU Siddiqui agreed to be mine! 💍</p>
+        <div class="emoji">💖💘💝💗💓💞💕💟🎉🎊🎆</div>
+        <p>This calls for celebration!</p>
+        <button class="whatsapp-btn" id="whatsapp-btn">i miss youu, unblock me please <br> click me ! 💌</button>
+        <p class="signature">The happiest man alive, S.M. Azfar</p>
+    </div>
+    
+    <div class="floating-hearts" id="floating-hearts"></div>
+    
+    <script>
+        // DOM elements
+        const scenes = {
+            1: document.getElementById('proposal-scene-1'),
+            2: document.getElementById('proposal-scene-2'),
+            3: document.getElementById('proposal-scene-3'),
+            4: document.getElementById('proposal-scene-4'),
+            celebration: document.getElementById('celebration')
+        };
+        
+        // Game variables
+        let currentScene = 1;
+        const heartEmojis = ['🤍','🖇️','🪄','🫀','🫂','👀','🌹','💫','🌙','❤️'];
+        const whatsappNumber = '03110387727';
+        
+        // Initialize floating hearts
+        function createFloatingHearts() {
+            const container = document.getElementById('floating-hearts');
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                heart.style.animationDuration = (Math.random() * 4 + 3) + 's';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(heart);
+            }
+        }
+        
+        // Change scene
+        function changeScene(newScene) {
+            scenes[currentScene].classList.add('hidden');
+            scenes[newScene].classList.remove('hidden');
+            currentScene = newScene;
+            
+            // Make "No" buttons more difficult to click as scenes progress
+            if (newScene > 1) {
+                const noBtns = document.querySelectorAll('.btn-no');
+                noBtns.forEach(btn => {
+                    btn.addEventListener('mouseenter', function() {
+                        makeButtonRunAway(this);
+                    });
+                });
+            }
+        }
+        
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#ff6b9d', '#ff8fab', '#ffb3c6', '#4CAF50', '#8BC34A', '#FFC107', '#FF9800'];
+            
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = -10 + 'px';
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                confetti.style.animation = `float-up ${Math.random() * 3 + 2}s linear forwards`;
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(confetti);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+        
+        // Celebration function
+        function celebrate() {
+            scenes[currentScene].classList.add('hidden');
+            scenes.celebration.classList.add('active');
+            createConfetti();
+            
+            // Create floating emojis
+            const emojis = ['🎉', '💍', '💘', '🎊', '❤️', '🥳', '💞', '💐'];
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const emoji = document.createElement('div');
+                    emoji.className = 'heart';
+                    emoji.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                    emoji.style.left = Math.random() * 100 + 'vw';
+                    emoji.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                    emoji.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    document.body.appendChild(emoji);
+                    
+                    setTimeout(() => {
+                        emoji.remove();
+                    }, 5000);
+                }, i * 100);
+            }
+        }
+        
+        // Make button run away more dynamically
+        function makeButtonRunAway(btn) {
+            const maxX = window.innerWidth - btn.offsetWidth;
+            const maxY = window.innerHeight - btn.offsetHeight;
+            
+            // Calculate position away from cursor
+            const rect = btn.getBoundingClientRect();
+            const btnCenterX = rect.left + rect.width / 2;
+            const btnCenterY = rect.top + rect.height / 2;
+            
+            // Get mouse position from event (if available)
+            let mouseX = window.innerWidth / 2;
+            let mouseY = window.innerHeight / 2;
+            
+            // Calculate direction away from mouse
+            const angle = Math.atan2(btnCenterY - mouseY, btnCenterX - mouseX);
+            const distance = 200 + Math.random() * 100; // Move further away
+            
+            // Calculate new position
+            let newX = btnCenterX + Math.cos(angle) * distance;
+            let newY = btnCenterY + Math.sin(angle) * distance;
+            
+            // Keep within bounds
+            newX = Math.max(0, Math.min(maxX, newX - rect.width / 2));
+            newY = Math.max(0, Math.min(maxY, newY - rect.height / 2));
+            
+            btn.style.position = 'absolute';
+            btn.style.left = newX + 'px';
+            btn.style.top = newY + 'px';
+            
+            // Add rotation effect
+            btn.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
+        }
+        
+        // Redirect to WhatsApp
+        function redirectToWhatsApp() {
+            const message = encodeURIComponent("I said YES! Let's talk 💖");
+            window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
+        }
+        
+        // Event listeners for all yes buttons
+        document.getElementById('yes-btn').addEventListener('click', celebrate);
+        document.getElementById('yes-btn-2').addEventListener('click', celebrate);
+        document.getElementById('yes-btn-3').addEventListener('click', celebrate);
+        document.getElementById('yes-btn-4').addEventListener('click', celebrate);
+        
+        // Event listeners for no buttons
+        document.getElementById('no-btn-1').addEventListener('click', () => {
+            changeScene(2);
+        });
+        
+        document.getElementById('no-btn-2').addEventListener('click', () => {
+            changeScene(3);
+        });
+        
+        document.getElementById('no-btn-3').addEventListener('click', () => {
+            changeScene(4);
+        });
+        
+        document.getElementById('no-btn-4').addEventListener('click', function() {
+            // Make the button spin and change color
+            const btn = this;
+            btn.innerHTML = 'Okay okay, YES! 😍';
+            btn.style.background = 'linear-gradient(45deg, #4CAF50, #8BC34A)';
+            btn.style.animation = 'spin 0.5s linear';
+            
+            setTimeout(() => {
+                celebrate();
+            }, 1000);
+        });
+        
+        // WhatsApp button
+        document.getElementById('whatsapp-btn').addEventListener('click', redirectToWhatsApp);
+        
+        // Make no buttons run away on hover after first click
+        document.querySelectorAll('.btn-no').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                if (currentScene > 1) {
+                    makeButtonRunAway(this);
+                }
+            });
+        });
+        
+        // Initialize
+        createFloatingHearts();
+        
+        // Easter egg - type "ZAINAB" to automatically accept
+        let typedString = '';
+        document.addEventListener('keydown', (e) => {
+            typedString += e.key.toUpperCase();
+            if (typedString.length > 6) typedString = typedString.slice(1);
+            
+            if (typedString === 'ZAINAB') {
+                celebrate();
+            }
+        });
+    </script>
+</body>
+</html>
