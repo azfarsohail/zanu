@@ -357,6 +357,7 @@
         let currentScene = 1;
         const heartEmojis = ['🤍','🖇️','🪄','🫀','🫂','👀','🌹','💫','🌙','❤️'];
         const whatsappNumber = '03110387727';
+        const whatsappMessage = "I said YES! Let's talk 💖";
         
         // Initialize floating hearts
         function createFloatingHearts() {
@@ -473,10 +474,16 @@
             btn.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
         }
         
-        // Redirect to WhatsApp
+        // Redirect to WhatsApp with pre-filled message
         function redirectToWhatsApp() {
-            const message = encodeURIComponent("I said YES! Let's talk 💖");
-            window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            
+            // Open WhatsApp in a new tab
+            window.open(whatsappUrl, '_blank');
+            
+            // For mobile devices, this will automatically open WhatsApp app with the message ready to send
+            // The user just needs to press the send button
         }
         
         // Event listeners for all yes buttons
