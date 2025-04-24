@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Zainab, Will You Be Mine? 💝</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&display=swap');
@@ -19,18 +19,20 @@
             padding: 0;
             box-sizing: border-box;
             user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
         
-       body {
-  font-family: 'Arial', sans-serif;
-  background-image: url('az.jpeg');
-  background-size: 300px 300px; /* Adjust the size of the repeating pattern */
-  background-repeat: repeat;
-  min-height: 100vh;
-  overflow: hidden;
-  position: relative;
-  transition: all 0.5s;
-}
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('az.jpeg');
+            background-size: 200px 200px; /* Smaller pattern for mobile */
+            background-repeat: repeat;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.5s;
+            touch-action: manipulation;
+        }
         
         .scene {
             position: fixed;
@@ -42,7 +44,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 15px;
             text-align: center;
             z-index: 1;
             opacity: 1;
@@ -57,63 +59,66 @@
         
         .love-letter {
             background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            max-width: 600px;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            max-width: 95%;
+            width: 100%;
             position: relative;
             transform-style: preserve-3d;
             transition: all 0.5s;
+            margin: 10px;
         }
         
         .love-letter::before {
             content: "";
             position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
             background: linear-gradient(45deg, #ff6b9d, #ffb3c6);
             z-index: -1;
-            border-radius: 30px;
+            border-radius: 20px;
             opacity: 0.7;
-            filter: blur(20px);
+            filter: blur(10px);
         }
         
         h1 {
             font-family: 'Pacifico', cursive;
             color: var(--dark);
-            margin-bottom: 20px;
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
         
         p {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: #555;
-            margin-bottom: 20px;
-            line-height: 1.6;
+            margin-bottom: 15px;
+            line-height: 1.5;
         }
         
         .signature {
             font-family: 'Dancing Script', cursive;
-            font-size: 2rem;
+            font-size: 1.5rem;
             color: var(--dark);
-            margin-top: 20px;
+            margin-top: 15px;
         }
         
         .btn {
             border: none;
-            padding: 15px 30px;
-            margin: 10px;
+            padding: 12px 25px;
+            margin: 8px;
             border-radius: 50px;
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            min-width: 120px;
         }
         
         .btn-yes {
@@ -128,9 +133,9 @@
             transition: all 0.5s ease-out;
         }
         
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        .btn:hover, .btn:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
         
         .btn:active {
@@ -139,10 +144,11 @@
         
         .btn-container {
             position: relative;
-            margin-top: 30px;
+            margin-top: 20px;
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
+            gap: 10px;
         }
         
         /* Special effects */
@@ -182,8 +188,8 @@
         /* Celebration */
         .confetti {
             position: absolute;
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             opacity: 0;
         }
         
@@ -197,11 +203,13 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: rgba(255,255,255,0.9);
+            background: rgba(255,255,255,0.95);
             z-index: 100;
             opacity: 0;
             pointer-events: none;
             transition: all 0.5s;
+            padding: 20px;
+            text-align: center;
         }
         
         .celebration.active {
@@ -210,64 +218,104 @@
         }
         
         .celebration h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
+            font-size: 2rem;
+            margin-bottom: 15px;
             color: var(--dark);
         }
         
         .celebration p {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
         }
         
         .emoji {
-            font-size: 3rem;
-            margin: 10px;
+            font-size: 2rem;
+            margin: 8px;
             animation: pulse 1s infinite alternate;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
         
         .whatsapp-btn {
             background: linear-gradient(45deg, #25D366, #128C7E);
             color: white;
-            padding: 15px 30px;
+            padding: 12px 25px;
             border-radius: 50px;
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: bold;
             border: none;
-            margin-top: 20px;
+            margin-top: 15px;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
             transition: all 0.3s;
+            width: 90%;
+            max-width: 300px;
         }
         
-        .whatsapp-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        .whatsapp-btn:hover, .whatsapp-btn:focus {
+            transform: scale(1.03);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
         
         @keyframes pulse {
             from { transform: scale(1); }
-            to { transform: scale(1.2); }
+            to { transform: scale(1.1); }
         }
         
-        /* Responsive */
-        @media (max-width: 600px) {
+        /* Mobile-specific enhancements */
+        @media (max-width: 480px) {
+            .love-letter {
+                padding: 15px;
+            }
+            
             h1 {
-                font-size: 2rem;
+                font-size: 1.5rem;
             }
             
             p {
-                font-size: 1rem;
+                font-size: 0.9rem;
             }
             
             .btn {
-                padding: 12px 25px;
-                font-size: 1rem;
+                padding: 10px 20px;
+                font-size: 0.9rem;
+                min-width: 110px;
             }
             
             .celebration h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
+            
+            .celebration p {
+                font-size: 1rem;
+            }
+            
+            .emoji {
+                font-size: 1.8rem;
+            }
+            
+            .signature {
+                font-size: 1.3rem;
+            }
+        }
+        
+        /* Prevent text selection on buttons */
+        .btn, .whatsapp-btn {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        /* Better touch targets */
+        .btn, .whatsapp-btn {
+            min-height: 44px;
+        }
+        
+        /* Smooth transitions for mobile */
+        .btn-no {
+            transition: transform 0.2s ease-out;
         }
     </style>
 </head>
@@ -275,9 +323,9 @@
     <!-- Proposal Scenes -->
     <div class="scene" id="proposal-scene-1">
         <div class="love-letter">
-            <h1>My Dearest ZAINAB ..   💖</h1>
-            <p>From the moment you passed my way, my world get beautiful colors I never existed just like this . Your laughter is my favorite happiness, and your smile my most favorite view.</p>
- <p>i want to spend every sunrise and sunset with you. Will you be with me ?</p>
+            <h1>My Dearest ZAINAB .. 💖</h1>
+            <p>From the moment you passed my way, my world get beautiful colors I never existed just like this. Your laughter is my favorite happiness, and your smile my most favorite view.</p>
+            <p>I want to spend every sunrise and sunset with you. Will you be with me?</p>
             
             <div class="btn-container">
                 <button class="btn btn-yes" id="yes-btn">YES! 💘</button>
@@ -291,8 +339,8 @@
     <div class="scene hidden" id="proposal-scene-2">
         <div class="love-letter">
             <h1>My Heart's Desire 💘</h1>
-            <p>ZANU, I understand , please aap ye jaan len that my only love for you is unlimited.</p>
-            <p>You complete me by your lovely ways I can't explain. Would you give me a chance?
+            <p>ZANU, I understand, please aap ye jaan len that my only love for you is unlimited.</p>
+            <p>You complete me by your lovely ways I can't explain. Would you give me a chance?</p>
             
             <div class="btn-container">
                 <button class="btn btn-yes" id="yes-btn-2">YES! ❤️</button>
@@ -325,7 +373,7 @@
             <p>Will you be mine, today and forever?</p>
             
             <div class="btn-container">
-                <button class="btn btn-yes" id="yes-btn-4">YES!  🤭</button>
+                <button class="btn btn-yes" id="yes-btn-4">YES! 🤭</button>
                 <button class="btn btn-no" id="no-btn-4">Make me! 😝</button>
             </div>
             
@@ -336,7 +384,7 @@
     <!-- Celebration Scene -->
     <div class="celebration" id="celebration">
         <h1>YAY! SHE SAID YES! 🎉</h1>
-        <p>ZANU agreed to be mine!  🤭 </p>
+        <p>ZANU agreed to be mine! 🤭</p>
         <div class="emoji">🤍 😍 💞 🎉 👀 🌹 💫 🌙 ❤️</div>
         <p>This calls for celebration!</p>
         <button class="whatsapp-btn" id="whatsapp-btn">i miss youu, unblock me please <br> click me👈🏻💌</button>
@@ -364,12 +412,12 @@
         // Initialize floating hearts
         function createFloatingHearts() {
             const container = document.getElementById('floating-hearts');
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 15; i++) { // Fewer hearts for mobile
                 const heart = document.createElement('div');
                 heart.className = 'heart';
                 heart.innerHTML = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
                 heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                heart.style.fontSize = (Math.random() * 16 + 8) + 'px'; // Smaller hearts
                 heart.style.animationDuration = (Math.random() * 4 + 3) + 's';
                 heart.style.animationDelay = Math.random() * 5 + 's';
                 container.appendChild(heart);
@@ -389,22 +437,25 @@
                     btn.addEventListener('mouseenter', function() {
                         makeButtonRunAway(this);
                     });
+                    btn.addEventListener('touchstart', function() {
+                        makeButtonRunAway(this);
+                    }, {passive: true});
                 });
             }
         }
         
         // Create confetti effect
         function createConfetti() {
-            const colors = ['#ff6b9d', '#ff8fab', '#ffb3c6', '#4CAF50, #8BC34A', '#FFC107', '#FF9800'];
+            const colors = ['#ff6b9d', '#ff8fab', '#ffb3c6', '#4CAF50', '#8BC34A', '#FFC107', '#FF9800'];
             
-            for (let i = 0; i < 150; i++) {
+            for (let i = 0; i < 100; i++) { // Less confetti for mobile
                 const confetti = document.createElement('div');
                 confetti.className = 'confetti';
                 confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                 confetti.style.left = Math.random() * 100 + 'vw';
                 confetti.style.top = -10 + 'px';
-                confetti.style.width = Math.random() * 10 + 5 + 'px';
-                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.width = Math.random() * 8 + 4 + 'px';
+                confetti.style.height = Math.random() * 8 + 4 + 'px';
                 confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
                 confetti.style.animation = `float-up ${Math.random() * 3 + 2}s linear forwards`;
                 confetti.style.animationDelay = Math.random() * 2 + 's';
@@ -425,20 +476,20 @@
             
             // Create floating emojis
             const emojis = ['🎉', '💍', '💘', '🎊', '❤️', '🥳', '💞', '💐'];
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 20; i++) { // Fewer emojis for mobile
                 setTimeout(() => {
                     const emoji = document.createElement('div');
                     emoji.className = 'heart';
                     emoji.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
                     emoji.style.left = Math.random() * 100 + 'vw';
-                    emoji.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                    emoji.style.fontSize = (Math.random() * 20 + 15) + 'px'; // Smaller emojis
                     emoji.style.animationDuration = (Math.random() * 3 + 2) + 's';
                     document.body.appendChild(emoji);
                     
                     setTimeout(() => {
                         emoji.remove();
                     }, 5000);
-                }, i * 100);
+                }, i * 150); // Slower animation for mobile
             }
         }
         
@@ -447,26 +498,22 @@
             const maxX = window.innerWidth - btn.offsetWidth;
             const maxY = window.innerHeight - btn.offsetHeight;
             
-            // Calculate position away from cursor
+            // Calculate position away from center
             const rect = btn.getBoundingClientRect();
             const btnCenterX = rect.left + rect.width / 2;
             const btnCenterY = rect.top + rect.height / 2;
             
-            // Get mouse position from event (if available)
-            let mouseX = window.innerWidth / 2;
-            let mouseY = window.innerHeight / 2;
-            
-            // Calculate direction away from mouse
-            const angle = Math.atan2(btnCenterY - mouseY, btnCenterX - mouseX);
-            const distance = 200 + Math.random() * 100; // Move further away
+            // Get random angle
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 150 + Math.random() * 50; // Shorter distance for mobile
             
             // Calculate new position
             let newX = btnCenterX + Math.cos(angle) * distance;
             let newY = btnCenterY + Math.sin(angle) * distance;
             
             // Keep within bounds
-            newX = Math.max(0, Math.min(maxX, newX - rect.width / 2));
-            newY = Math.max(0, Math.min(maxY, newY - rect.height / 2));
+            newX = Math.max(10, Math.min(maxX - 10, newX - rect.width / 2));
+            newY = Math.max(10, Math.min(maxY - 10, newY - rect.height / 2));
             
             btn.style.position = 'absolute';
             btn.style.left = newX + 'px';
@@ -474,6 +521,11 @@
             
             // Add rotation effect
             btn.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
+            
+            // Vibrate on mobile
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
         }
         
         // Redirect to WhatsApp with pre-filled message
@@ -490,6 +542,12 @@
         document.getElementById('yes-btn-2').addEventListener('click', celebrate);
         document.getElementById('yes-btn-3').addEventListener('click', celebrate);
         document.getElementById('yes-btn-4').addEventListener('click', celebrate);
+        
+        // Touch event listeners for mobile
+        document.getElementById('yes-btn').addEventListener('touchend', celebrate);
+        document.getElementById('yes-btn-2').addEventListener('touchend', celebrate);
+        document.getElementById('yes-btn-3').addEventListener('touchend', celebrate);
+        document.getElementById('yes-btn-4').addEventListener('touchend', celebrate);
         
         // Event listeners for no buttons
         document.getElementById('no-btn-1').addEventListener('click', () => {
@@ -516,16 +574,49 @@
             }, 1000);
         });
         
+        // Touch events for no buttons
+        document.getElementById('no-btn-1').addEventListener('touchend', () => {
+            changeScene(2);
+        });
+        
+        document.getElementById('no-btn-2').addEventListener('touchend', () => {
+            changeScene(3);
+        });
+        
+        document.getElementById('no-btn-3').addEventListener('touchend', () => {
+            changeScene(4);
+        });
+        
+        document.getElementById('no-btn-4').addEventListener('touchend', function(e) {
+            e.preventDefault();
+            // Make the button spin and change color
+            const btn = this;
+            btn.innerHTML = 'Okay okay, YES! 😍';
+            btn.style.background = 'linear-gradient(45deg, #4CAF50, #8BC34A)';
+            btn.style.animation = 'spin 0.5s linear';
+            
+            setTimeout(() => {
+                celebrate();
+            }, 1000);
+        });
+        
         // WhatsApp button
         document.getElementById('whatsapp-btn').addEventListener('click', redirectToWhatsApp);
+        document.getElementById('whatsapp-btn').addEventListener('touchend', redirectToWhatsApp);
         
-        // Make no buttons run away on hover after first click
+        // Make no buttons run away on hover/touch after first click
         document.querySelectorAll('.btn-no').forEach(btn => {
             btn.addEventListener('mouseenter', function() {
                 if (currentScene > 1) {
                     makeButtonRunAway(this);
                 }
             });
+            
+            btn.addEventListener('touchstart', function() {
+                if (currentScene > 1) {
+                    makeButtonRunAway(this);
+                }
+            }, {passive: true});
         });
         
         // Initialize
@@ -540,6 +631,22 @@
             if (typedString === 'ZAINAB') {
                 celebrate();
             }
+        });
+        
+        // Prevent zooming on mobile
+        document.addEventListener('touchmove', function(e) {
+            if (e.scale !== 1) { e.preventDefault(); }
+        }, { passive: false });
+        
+        // Better touch feedback
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.95)';
+            }, {passive: true});
+            
+            button.addEventListener('touchend', function() {
+                this.style.transform = '';
+            }, {passive: true});
         });
     </script>
 </body>
